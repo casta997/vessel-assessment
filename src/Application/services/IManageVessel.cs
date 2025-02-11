@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.services
 {
-    internal interface IVessel
+    internal interface IManageVessel
     {
-        int Id { get; }
-        string ImoNumber { get; set; }
+//        List<Vessel> vessels { get; set; }
     }
 }
