@@ -34,9 +34,17 @@ namespace Application.Services
             Console.WriteLine($"The vessel with imo number {newVesselImoNumber} was saved successfully!" );
         }
 
+        //Method to stamp all the vessels inside the list vessels
         public void ReadVessel()
         {
-            
+            if (vessels != null)
+            {
+                vessels.ForEach(i => Console.WriteLine("{0}\n", i));
+            }
+            else
+            {
+                Console.WriteLine("The vessels list is empty");
+            }
         }
 
         public void UpdateVessel() 
