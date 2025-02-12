@@ -22,7 +22,7 @@ namespace Application.Services
         //Method to create and add new vessel to the list vessels
         public void CreateVessel()
         {
-            Console.Write("Enter the imo number for the new vessel: ");
+            Console.Write("\nEnter the imo number for the new vessel: ");
             string newVesselImoNumber = Console.ReadLine();
 
             Vessel lastVessel = vessels.LastOrDefault();
@@ -55,9 +55,9 @@ namespace Application.Services
         {
             if (vessels.Count() != 0)
             {
-                Console.WriteLine("List of the vessels: \n");
+                Console.WriteLine("\nList of the vessels: \n");
 
-                string roof = new string('-', 25);
+                string roof = new string('-', 27);
                 Console.WriteLine($"{roof}");
                 Console.WriteLine($"| {"Id",-5} | {"IMO Number",-15} |");
                 Console.WriteLine($"| {new string('-', 5)} | {new string('-', 15)} |");
@@ -66,7 +66,7 @@ namespace Application.Services
             }
             else
             {
-                Console.WriteLine("The vessels list is empty\n"+
+                Console.WriteLine("\nThe vessels list is empty\n"+
                                    "-----------------------------");
             }
         }
@@ -74,7 +74,7 @@ namespace Application.Services
         //Method to modify a vessel imo number
         public void UpdateVessel() 
         {
-            Console.Write("Enter the imo number of the vessel that you want to modify: ");
+            Console.Write("\nEnter the imo number of the vessel that you want to modify: ");
             string vesselToModify = Console.ReadLine();
 
             Vessel vessel = vessels.FirstOrDefault(v => v.ImoNumber == vesselToModify);
@@ -94,9 +94,10 @@ namespace Application.Services
             }
         }
 
+        //Method to delete vessels
         public void DeleteVessel()
         {
-            Console.Write("Enter the imo number of the vessel that you want to delete: ");
+            Console.Write("\nEnter the imo number of the vessel that you want to delete: ");
             string vesselToDelete = Console.ReadLine();
 
             Vessel vessel = vessels.FirstOrDefault(v => v.ImoNumber == vesselToDelete);
@@ -127,54 +128,53 @@ namespace Application.Services
                                    "3) Modify a vessel\n"+
                                    "4) Delete a vessel\n"+
                                    "5) Exit\n");
+                ReadVessel();
+                Console.Write("\nSelect action: ");
                 choiceSelected = Console.ReadLine();
                 //Console.Clear(); Un comment this to clear the menu after every choice
 
                 switch (choiceSelected)
                 {
                     case "1":
-                        Console.WriteLine($"Action selected {choiceSelected}\n");
                         CreateVessel();
                         RepeatActionOnVessel();
-                        Console.ReadLine();
                         break;
                     case "2":
-                        Console.WriteLine($"Action selected {choiceSelected}\n");
                         ReadVessel();
+                        Console.WriteLine("\nPress any key to continue...");
                         Console.ReadLine();
                         break;
                     case "3":
                         if (vessels.Count != 0)
                         {
-                            Console.WriteLine($"Action selected {choiceSelected}\n");
                             UpdateVessel();
                         }
                         else
                         {
-                            Console.WriteLine("\nThe vessel list is empty, you can't modify elements.\n"+
+                            Console.WriteLine("\nThe vessel list is empty, you can't modify elements. Press any key to continue...\n" +
                                    "-----------------------------");
+                            Console.ReadLine();
                         }
                         RepeatActionOnVessel();
-                        Console.ReadLine();
                         break;
                     case "4":
                         if (vessels.Count != 0)
                         {
-                            Console.WriteLine($"Action selected {choiceSelected}\n");
                             DeleteVessel();
                         }
                         else
                         {
-                            Console.WriteLine("\nThe vessel list is empty, you can't delete elements.\n" +
+                            Console.WriteLine("\nThe vessel list is empty, you can't delete elements. Press any key to continue...\n" +
                                    "-----------------------------");
+                            Console.ReadLine();
                         }
                         RepeatActionOnVessel();
-                        Console.ReadLine();
                         break;
                     case "5":
                         return false;
                     default:
-                        Console.WriteLine("\nError!! Choose an action from the menu, 1 to 5.\n");
+                        Console.WriteLine("\nError!! Choose an action from the menu, 1 to 5. Press any key to continue...\n");
+                        Console.ReadLine();
                         break;
                 }
                 Console.Clear();
@@ -184,42 +184,52 @@ namespace Application.Services
 
         //Method to repeat the last action selected from the menu
         public bool RepeatActionOnVessel()
-        {
+        {  
             do
             {
-                Console.WriteLine("Do you want to repeat the action?\n\n" +
-                                "1) Yes\n" +
-                                "2) No\n");
-                string repeatChoiceSelected = Console.ReadLine();
-                
-                if (repeatChoiceSelected == "1")
+                if (vessels.Count != 0)
                 {
-                    switch (choiceSelected)
+                    Console.WriteLine("\nDo you want to repeat the action?\n\n" +
+                                    "1) Yes\n" +
+                                    "2) No\n");
+                    Console.Write("Select action: ");
+                    string repeatChoiceSelected = Console.ReadLine();
+
+                    if (repeatChoiceSelected == "1")
                     {
-                        case "1":
-                            CreateVessel();
-                            break;
-                        case "3":
-                            UpdateVessel();
-                            break;
-                        case "4":
-                            DeleteVessel();
-                            break;
-                        default:
-                            Console.WriteLine("Error!!");
-                            break;
+                        switch (choiceSelected)
+                        {
+                            case "1":
+                                CreateVessel();
+                                break;
+                            case "3":
+                                UpdateVessel();
+                                break;
+                            case "4":
+                                DeleteVessel();
+                                break;
+                            default:
+                                Console.WriteLine("Error!!");
+                                break;
+                        }
                     }
-                }
-                else if (repeatChoiceSelected == "2")
-                {
-                    return false;
+                    else if (repeatChoiceSelected == "2")
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nError!! Select a valid option, 1 or 2.\n");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Error!! Select a valid option.");
+                    Console.WriteLine("\nThe list is empty, press any key to continue...");
+                    Console.ReadLine();
+                    return false;
                 }
             }
-            while(true);
+            while (true);
         }
     }
 }

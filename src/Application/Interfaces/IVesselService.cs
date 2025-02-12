@@ -21,6 +21,6 @@ namespace Application.Interfaces
         public void UpdateVessel();
         public void DeleteVessel();
         public bool SelectActionOnVessel();
-        public void RepeatActionOnVessel();
+        public bool RepeatActionOnVessel();
     }
 }
