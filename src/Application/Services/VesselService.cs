@@ -21,8 +21,8 @@ namespace Application.Services
         //Method to create and add new vessel to the list vessels
         public void CreateVessel()
         {
-            Console.WriteLine("Enter a new vessel");
-            Console.WriteLine("Imo number: ");
+            Console.WriteLine("\nEnter a new vessel");
+            Console.Write("Imo number: ");
             string newVesselImoNumber = Console.ReadLine();
             
             Vessel newVesselInList = new()
@@ -31,19 +31,23 @@ namespace Application.Services
                 ImoNumber = newVesselImoNumber
             };
             vessels.Add(newVesselInList);
-            Console.WriteLine($"The vessel with imo number {newVesselImoNumber} was saved successfully!" );
+            Console.WriteLine($"\nThe vessel with imo number {newVesselImoNumber} was saved successfully!\n" +
+                                   "-----------------------------");
         }
 
         //Method to stamp all the vessels inside the list vessels
         public void ReadVessel()
         {
-            if (vessels != null)
+            if (vessels.Count() != 0)
             {
+                Console.WriteLine("\nList of all the vessel: \n");
                 vessels.ForEach(i => Console.WriteLine("{0}\n", i));
+                Console.WriteLine("-----------------------------");
             }
             else
             {
-                Console.WriteLine("The vessels list is empty");
+                Console.WriteLine("\nThe vessels list is empty\n"+
+                                   "-----------------------------");
             }
         }
 
@@ -57,9 +61,46 @@ namespace Application.Services
 
         }
 
-        public void SelectActionOnVessel()
+        //Method for the selection of the user
+        public bool SelectActionOnVessel()
         {
+            do
+            {
+                Console.WriteLine("WELCOME TO VESSEL COMPANY\n\n"+
+                                   "Select an action:\n\n"+
+                                   "1) Create a new vessel\n"+
+                                   "2) Read list of vessels avaiable\n"+
+                                   "3) Modify a vessel\n"+
+                                   "4) Delete a vessel\n"+
+                                   "5) Exit\n");
+                string choiceSelected = Console.ReadLine();
 
+                switch (choiceSelected)
+                {
+                    case "1":
+                        Console.WriteLine($"Action selected {choiceSelected}");
+                        CreateVessel();
+                        break;
+                    case "2":
+                        Console.WriteLine($"Action selected {choiceSelected}\n");
+                        ReadVessel();
+                        break;
+                    case "3":
+                        Console.WriteLine($"Action selected {choiceSelected}\n");
+                        UpdateVessel();
+                        break;
+                    case "4":
+                        Console.WriteLine($"Action selected {choiceSelected}\n");
+                        DeleteVessel();
+                        break;
+                    case "5":
+                        return false;
+                    default:
+                        Console.WriteLine("Error!! Choose an action from the menu, 1 to 5.");
+                        break;
+                }
+            }
+            while (true);
         }
     }
 }
