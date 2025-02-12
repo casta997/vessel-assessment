@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +30,11 @@ namespace Application.repos
             return Vessels.Find(v => v.ImoNumber == imoCode);
         }
 
+        public bool checkVesselExist(string imoCode)
+        {
+            return Vessels.Exists(v => v.ImoNumber == imoCode);
+        }
+
         public bool CheckValueImoNumber(string imoNumber)
         {
             if (string.IsNullOrEmpty(imoNumber)) return false;
@@ -42,10 +48,13 @@ namespace Application.repos
             {
                 Console.Write("Insert IMO code:");
                 var imoCode = Console.ReadLine();
+                imoCode = imoCode.Trim();
+               
                 if (!CheckValueImoNumber(imoCode))
-                {
                     Console.WriteLine("IMO Number can not be empty!");
-                } else
+                else if (checkVesselExist(imoCode))
+                    Console.WriteLine("Vessel is already added!");
+                else
                 {
                     AddVessel(imoCode);
                     Console.Clear();
@@ -110,7 +119,7 @@ Information of the selected vessel:
             var imoCode = Console.ReadLine();
             Console.Clear();
 
-            if (!Vessels.Exists(v => v.ImoNumber == imoCode))
+            if (!checkVesselExist(imoCode))
             {
                 Console.WriteLine("Vessel not found!!");
             }
