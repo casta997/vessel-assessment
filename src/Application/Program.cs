@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Application.repos;
 
-var programmVessel = new ManageVessel();
+var appManage = new ManageVessel();
 
 Console.WriteLine(@"
 ---------------------Managing Vessels---------------------
@@ -23,24 +23,10 @@ while (isProgramOn)
     switch (nOption)
     {
         case 1:
-            Console.Write("Insert IMO code:");
-            var imoCode = Console.ReadLine();
-            if (programmVessel.checkImoNumber(imoCode))
-            {
-                programmVessel.addVessel(imoCode);
-                Console.WriteLine("Vessel added");
-            }
+            appManage.ProgrammAddingVessel();
             break;
         case 2:
-            Console.Write("Insert id of the interested vessel: ");
-            var idVesselInput = int.Parse(Console.ReadLine());
-            var vessel = programmVessel.vessel(idVesselInput);
-            Console.WriteLine(
-                $@"
-Information of the selected vessel:
-    {vessel}
-"
-                );
+            appManage.ProgrammGetVessel();
             break;
         case 3:
             Console.WriteLine("Vessel edited!");
@@ -49,7 +35,7 @@ Information of the selected vessel:
             Console.WriteLine("Vessel deleted");
             break;
         case 5:
-            var  vessels = programmVessel.Vessels;
+            var  vessels = appManage.Vessels;
             foreach (var item in vessels)
             {
                 Console.WriteLine(item.ToString());

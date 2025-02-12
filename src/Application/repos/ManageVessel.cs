@@ -16,28 +16,57 @@ namespace Application.repos
             Vessels = new List<Vessel>();
         }
 
-        public void addVessel(string imoVessel) 
+        public void AddVessel(string imoVessel) 
         {
             var countVessels = Vessels.Count + 1;
             var vessel = new Vessel(countVessels, imoVessel);
             Vessels.Add(vessel);
-            Console.WriteLine("Vessel added!");
-            foreach (var item in Vessels)
-            {
-                Console.WriteLine(item.ToString());
-            }
+            Console.WriteLine($"Vessel {imoVessel} added!");
         }
 
-        public Vessel vessel(int id)
+        public Vessel Vessel(int id)
         {
             Vessel v = Vessels.Find(v => v.Id == id);
             return v;
         }
 
-        public bool checkImoNumber(string imoNumber)
+        public bool CheckImoNumber(string imoNumber)
         {
             if (string.IsNullOrEmpty(imoNumber)) return false;
             return true;
+        }
+
+        public void ProgrammAddingVessel()
+        {
+            var emptyImoNumber = true;
+            while (emptyImoNumber)
+            {
+                Console.Write("Insert IMO code:");
+                var imoCode = Console.ReadLine();
+                if (!CheckImoNumber(imoCode))
+                {
+                    Console.WriteLine("IMO Number can not be empty!");
+                } else
+                {
+                    AddVessel(imoCode);
+                    Console.WriteLine($"Vessel {imoCode} is created successfully! ");
+                    emptyImoNumber = false;
+                }
+            }
+
+        }
+
+        public void ProgrammGetVessel()
+        {
+            Console.Write("Insert id of the interested vessel: ");
+            var idVesselInput = int.Parse(Console.ReadLine());
+            var vessel = Vessel(idVesselInput);
+            Console.WriteLine(
+                $@"
+Information of the selected vessel:
+    {vessel}
+"
+                );
         }
 
     }
