@@ -3,51 +3,70 @@ using Application.repos;
 
 var appManage = new ManageVessel();
 
-Console.WriteLine(@"
+var menuOperations = @"
 ---------------------Managing Vessels---------------------
 Select 1 operation:
 1.- Add vessel
-2.- Show vessel
+2.- Show vessels
 3.- Edit vessel
 4.- Delete vessel
-5.- List vessel
-Press any other number to exit!
-");
+5.- Exit
+";
+
+Console.WriteLine(menuOperations);
 
 var isProgramOn = true;
+var messageOptionNotAvailable = @"
+Option not available!!
+try again...
+
+Press any key to continue...
+";
 
 while (isProgramOn)
 {
-    var nOption = int.Parse(Console.ReadLine());
+    var sOption = Console.ReadLine();
+    int nOption;
 
-    switch (nOption)
+    bool success = int.TryParse(sOption, out nOption);
+    if (!success)
     {
-        case 1:
-            appManage.ProgrammAddingVessel();
-            break;
-        case 2:
-            appManage.ProgrammGetVessel();
-            break;
-        case 3:
-            Console.WriteLine("Vessel edited!");
-            break;
-        case 4:
-            Console.WriteLine("Vessel deleted");
-            break;
-        case 5:
-            var  vessels = appManage.Vessels;
-            foreach (var item in vessels)
-            {
-                Console.WriteLine(item.ToString());
-            }
-
-            break;
-        case 6:
-            
-        default:
-            Console.WriteLine("Finish program");
-            isProgramOn = false;
-            break;
+        Console.WriteLine(messageOptionNotAvailable);
+        Console.ReadLine();
+        Console.Clear();
+    }
+    else
+    {
+        switch (nOption)
+        {
+            case 1:
+                Console.Clear();
+                appManage.ProgrammAddingVessel();
+                break;
+            case 2:
+                Console.Clear();
+                appManage.ProgrammGetVessels();
+                break;
+            case 3:
+                Console.Clear();
+                Console.WriteLine("Vessel edited!");
+                break;
+            case 4:
+                Console.Clear();
+                Console.WriteLine("Vessel deleted");
+                break;
+            case 5:
+                Console.WriteLine("App is closing...");
+                isProgramOn = false;
+                break;
+            default:
+                Console.WriteLine(messageOptionNotAvailable);
+                Console.ReadLine();
+                Console.Clear();
+                break;
+        }
     }
 
+    if (nOption != 5)
+        Console.WriteLine(menuOperations);
 }

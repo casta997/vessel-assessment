@@ -26,8 +26,7 @@ namespace Application.repos
 
         public Vessel Vessel(int id)
         {
-            Vessel v = Vessels.Find(v => v.Id == id);
-            return v;
+            return Vessels.Find(v => v.Id == id);
         }
 
         public bool CheckImoNumber(string imoNumber)
@@ -49,15 +48,26 @@ namespace Application.repos
                 } else
                 {
                     AddVessel(imoCode);
-                    Console.WriteLine($"Vessel {imoCode} is created successfully! ");
+                    Console.Clear();
+                    Console.WriteLine($"Vessel {imoCode} is created successfully! \n");
                     emptyImoNumber = false;
                 }
             }
 
         }
 
-        public void ProgrammGetVessel()
+        public void ProgrammGetVessels()
         {
+            Console.WriteLine("----------- List of Vessels -----------");
+            foreach (var item in Vessels)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadLine();
+            Console.Clear();
+            /*
             Console.Write("Insert id of the interested vessel: ");
             var idVesselInput = int.Parse(Console.ReadLine());
             var vessel = Vessel(idVesselInput);
@@ -67,6 +77,7 @@ Information of the selected vessel:
     {vessel}
 "
                 );
+            */
         }
 
     }
