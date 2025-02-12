@@ -17,22 +17,35 @@ namespace Application.Services
     */
     public class VesselService : IVesselService
     {
-        public static int counter = vessels.Count();
 
         //Method to create and add new vessel to the list vessels
         public void CreateVessel()
         {
             Console.Write("Enter the imo number for the new vessel: ");
             string newVesselImoNumber = Console.ReadLine();
-            
+
+            Vessel lastVessel = vessels.LastOrDefault();
+            int newId = (lastVessel != null) ? lastVessel.Id + 1 : 1;
+
             Vessel newVesselInList = new()
             {
-                Id = counter + 1,
+                Id = newId,
                 ImoNumber = newVesselImoNumber
             };
             vessels.Add(newVesselInList);
             Console.WriteLine($"\nThe vessel with imo number {newVesselImoNumber} was saved successfully!\n" +
                                    "-----------------------------");
+        }
+
+        //Method that create 3 vessels and add them into the list
+        public void CreateExampleOfVessel()
+        {
+            Vessel vesselGenova = new() { Id = 1, ImoNumber = "genova1"};
+            Vessel vesselRoma = new() { Id = 2, ImoNumber = "roma1"};
+            Vessel vesselVenezia = new() { Id = 3, ImoNumber = "venezia1"};
+            vessels.Add(vesselGenova);
+            vessels.Add(vesselRoma);
+            vessels.Add(vesselVenezia);
         }
 
         //Method to stamp all the vessels inside the list vessels
@@ -41,7 +54,7 @@ namespace Application.Services
             if (vessels.Count() != 0)
             {
                 Console.WriteLine("List of the vessels: \n");
-                vessels.ForEach(i => Console.WriteLine("{0}\n", i));
+                vessels.ForEach(v => Console.WriteLine("{0}\n", v));
                 Console.WriteLine("-----------------------------");
             }
             else
@@ -96,6 +109,8 @@ namespace Application.Services
         //Method for the selection of the user
         public bool SelectActionOnVessel()
         {
+            //Comment this line to see what happens when the listof vessels is empty
+            CreateExampleOfVessel();
             do
             {
                 Console.WriteLine("WELCOME TO VESSEL COMPANY\n\n"+
