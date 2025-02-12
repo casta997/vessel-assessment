@@ -19,5 +19,10 @@ namespace Application.entities
             Id = id;
             ImoNumber = imoNumber;
         }
+
+        public override string ToString()
+        {
+            return $"Id: {Id} - ImoNumber: {ImoNumber}";
+        }
     }
 }

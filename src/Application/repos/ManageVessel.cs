@@ -9,34 +9,36 @@ namespace Application.repos
 {
     internal class ManageVessel
     {
-        public List<Vessel> Vessels;
+        public List<Vessel> Vessels { get; }
 
         public ManageVessel()
         {
             Vessels = new List<Vessel>();
         }
 
-        public void addVessel(Vessel v) 
+        public void addVessel(string imoVessel) 
         {
             var countVessels = Vessels.Count + 1;
-            var vessel = new Vessel(countVessels, "");
-            Vessels.Add(v);
+            var vessel = new Vessel(countVessels, imoVessel);
+            Vessels.Add(vessel);
             Console.WriteLine("Vessel added!");
-            Console.WriteLine(Vessels.ToString());
+            foreach (var item in Vessels)
+            {
+                Console.WriteLine(item.ToString());
+            }
         }
 
         public Vessel vessel(int id)
         {
-            Vessels.Find(v => v.Id == id);
-            return Vessels[id];
+            Vessel v = Vessels.Find(v => v.Id == id);
+            return v;
         }
 
-        
-        /*public List<Vessel> getVessels(Vessel v) 
+        public bool checkImoNumber(string imoNumber)
         {
-            return Vessels; 
+            if (string.IsNullOrEmpty(imoNumber)) return false;
+            return true;
         }
-        */
 
     }
 }

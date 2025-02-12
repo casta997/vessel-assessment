@@ -10,22 +10,37 @@ Select 1 operation:
 2.- Show vessel
 3.- Edit vessel
 4.- Delete vessel
-5.- Exit
+5.- List vessel
+Press any other number to exit!
 ");
 
-var nOption = 0;
+var isProgramOn = true;
 
-while (nOption != 5)
+while (isProgramOn)
 {
-    nOption = int.Parse(Console.ReadLine());
+    var nOption = int.Parse(Console.ReadLine());
 
     switch (nOption)
     {
         case 1:
-            Console.WriteLine("Vessel added");
+            Console.Write("Insert IMO code:");
+            var imoCode = Console.ReadLine();
+            if (programmVessel.checkImoNumber(imoCode))
+            {
+                programmVessel.addVessel(imoCode);
+                Console.WriteLine("Vessel added");
+            }
             break;
         case 2:
-            Console.WriteLine("Showing vessel");
+            Console.Write("Insert id of the interested vessel: ");
+            var idVesselInput = int.Parse(Console.ReadLine());
+            var vessel = programmVessel.vessel(idVesselInput);
+            Console.WriteLine(
+                $@"
+Information of the selected vessel:
+    {vessel}
+"
+                );
             break;
         case 3:
             Console.WriteLine("Vessel edited!");
@@ -34,10 +49,18 @@ while (nOption != 5)
             Console.WriteLine("Vessel deleted");
             break;
         case 5:
-            Console.WriteLine("Finish program");
+            var  vessels = programmVessel.Vessels;
+            foreach (var item in vessels)
+            {
+                Console.WriteLine(item.ToString());
+            }
+
             break;
+        case 6:
+            
         default:
-            Console.WriteLine("Option not available!");
+            Console.WriteLine("Finish program");
+            isProgramOn = false;
             break;
     }
 
