@@ -53,7 +53,7 @@ while (isProgramOn)
                 break;
             case 4:
                 Console.Clear();
-                Console.WriteLine("Vessel deleted");
+                appManage.ProgrammDeleteVessel();
                 break;
             case 5:
                 Console.WriteLine("App is closing...");

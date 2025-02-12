@@ -29,7 +29,7 @@ namespace Application.repos
             return Vessels.Find(v => v.ImoNumber == imoCode);
         }
 
-        public bool CheckImoNumber(string imoNumber)
+        public bool CheckValueImoNumber(string imoNumber)
         {
             if (string.IsNullOrEmpty(imoNumber)) return false;
             return true;
@@ -42,7 +42,7 @@ namespace Application.repos
             {
                 Console.Write("Insert IMO code:");
                 var imoCode = Console.ReadLine();
-                if (!CheckImoNumber(imoCode))
+                if (!CheckValueImoNumber(imoCode))
                 {
                     Console.WriteLine("IMO Number can not be empty!");
                 } else
@@ -100,8 +100,28 @@ Information of the selected vessel:
                 Console.WriteLine($"Vessel with IMO Number ({imoCode}) is changed!!\n");
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadLine();
+                Console.Clear();
             }
         }
 
+        public void ProgrammDeleteVessel()
+        {
+            Console.WriteLine("Insert IMO Number of Vessel to delete:");
+            var imoCode = Console.ReadLine();
+            Console.Clear();
+
+            if (!Vessels.Exists(v => v.ImoNumber == imoCode))
+            {
+                Console.WriteLine("Vessel not found!!");
+            }
+            else
+            {
+                var vesselFound = VesselByImoNumber(imoCode);
+                Vessels.Remove(vesselFound);
+                Console.WriteLine($"Vessel with IMO Number ({imoCode}) is deleted!!\n");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadLine();
+            }
+        }
     }
 }
