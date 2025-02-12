@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 namespace Application.Interfaces
 {
     /*
-     *  Creation of the interface IVesselService, with the following methods: _ CreateVessel()
-     *                                                                        _ ReadVessel()
-     *                                                                        _ UpdateVessel()
-     *                                                                        _ DeleteVessel()
-     *                                                                        _ SelectActionOnVessel()
+     *  Creation of the interface IVesselService, with the following methods: _ CreateVessel
+     *                                                                        _ ReadVessel
+     *                                                                        _ UpdateVessel
+     *                                                                        _ DeleteVessel
+     *                                                                        _ SelectActionOnVessel
+     *                                                                        _ RepeatActionOnVessel
     */
     public interface IVesselService
     {
@@ -20,5 +21,6 @@ namespace Application.Interfaces
         public void UpdateVessel();
         public void DeleteVessel();
         public bool SelectActionOnVessel();
+        public void RepeatActionOnVessel();
     }
 }
