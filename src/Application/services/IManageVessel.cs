@@ -9,6 +9,9 @@ namespace Application.services
 {
     internal interface IManageVessel
     {
-//        List<Vessel> vessels { get; set; }
+        void ProgrammDeleteVessel();
+        void ProgrammUpdateVessel();
+        void ProgrammGetVessels();
+        void ProgrammAddingVessel();
     }
 }

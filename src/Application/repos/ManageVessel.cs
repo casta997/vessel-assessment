@@ -1,4 +1,5 @@
 ﻿using Application.entities;
+using Application.services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.repos
 {
-    internal class ManageVessel
+    internal class ManageVessel: IManageVessel
     {
         public List<Vessel> Vessels { get; }
 
@@ -41,32 +42,44 @@ namespace Application.repos
             return true;
         }
 
+        public void MsgAfterConcludeOperations()
+        {
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
         public void ProgrammAddingVessel()
         {
-            var emptyImoNumber = true;
+            /*
+             * var emptyImoNumber = true;
             while (emptyImoNumber)
             {
-                Console.Write("Insert IMO code:");
-                var imoCode = Console.ReadLine();
-                imoCode = imoCode.Trim();
-               
-                if (!CheckValueImoNumber(imoCode))
-                {
-                    Console.Clear();
-                    Console.WriteLine("IMO Number can not be empty!");
-                }
-                else if (checkVesselExist(imoCode))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Vessel is already added!");
-                }
-                else
-                {
-                    AddVessel(imoCode);
-                    Console.Clear();
-                    Console.WriteLine($"Vessel {imoCode} is created successfully! \n");
-                    emptyImoNumber = false;
-                }
+            }
+            */
+            Console.Write("Insert IMO code:");
+            var imoCode = Console.ReadLine();
+            imoCode = imoCode.Trim();
+
+            if (!CheckValueImoNumber(imoCode))
+            {
+                Console.Clear();
+                Console.WriteLine("IMO Number can not be empty!");
+                MsgAfterConcludeOperations();
+            }
+            else if (checkVesselExist(imoCode))
+            {
+                Console.Clear();
+                Console.WriteLine($"Vessel {imoCode} is already added!");
+                MsgAfterConcludeOperations();
+            }
+            else
+            {
+                AddVessel(imoCode);
+                Console.Clear();
+                Console.WriteLine($"Vessel {imoCode} is created successfully! \n");
+                MsgAfterConcludeOperations();
+                //emptyImoNumber = false;
             }
 
         }
@@ -79,9 +92,7 @@ namespace Application.repos
                 Console.WriteLine(item);
             }
 
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadLine();
-            Console.Clear();
+            MsgAfterConcludeOperations();
             /*
             Console.Write("Insert id of the interested vessel: ");
             var idVesselInput = int.Parse(Console.ReadLine());
@@ -109,6 +120,7 @@ Information of the selected vessel:
             if (!Vessels.Exists(v => v.ImoNumber == imoCode))
             {
                 Console.WriteLine("Vessel not found!!");
+                MsgAfterConcludeOperations();
             } else
             {
                 Console.WriteLine($"Insert new IMO Number for vessel {imoCode}");
@@ -119,20 +131,20 @@ Information of the selected vessel:
                 {
                     Console.Clear();
                     Console.WriteLine("IMO Number can not be empty!");
+                    MsgAfterConcludeOperations();
                 }
                 else if (checkVesselExist(newImoCode))
                 {
                     Console.Clear();
                     Console.WriteLine("Vessel is already added!");
+                    MsgAfterConcludeOperations();
                 }
                 else
                 {
                     var vesselFound = VesselByImoNumber(imoCode);
                     vesselFound.ImoNumber = newImoCode;
                     Console.WriteLine($"Vessel with IMO Number ({imoCode}) is changed!!\n");
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
+                    MsgAfterConcludeOperations();
                 }
             }
         }
@@ -146,14 +158,14 @@ Information of the selected vessel:
             if (!checkVesselExist(imoCode))
             {
                 Console.WriteLine("Vessel not found!!");
+                MsgAfterConcludeOperations();
             }
             else
             {
                 var vesselFound = VesselByImoNumber(imoCode);
                 Vessels.Remove(vesselFound);
                 Console.WriteLine($"Vessel with IMO Number ({imoCode}) is deleted!!\n");
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadLine();
+                MsgAfterConcludeOperations();
             }
         }
     }
