@@ -49,7 +49,7 @@ while (isProgramOn)
                 break;
             case 3:
                 Console.Clear();
-                Console.WriteLine("Vessel edited!");
+                appManage.ProgrammUpdateVessel();
                 break;
             case 4:
                 Console.Clear();

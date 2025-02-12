@@ -24,9 +24,9 @@ namespace Application.repos
             Console.WriteLine($"Vessel {imoVessel} added!");
         }
 
-        public Vessel Vessel(int id)
+        public Vessel VesselByImoNumber(string imoCode)
         {
-            return Vessels.Find(v => v.Id == id);
+            return Vessels.Find(v => v.ImoNumber == imoCode);
         }
 
         public bool CheckImoNumber(string imoNumber)
@@ -78,6 +78,29 @@ Information of the selected vessel:
 "
                 );
             */
+        }
+
+        public void ProgrammUpdateVessel()
+        {
+            Console.WriteLine("Insert IMO Number of Vessel to modify:");
+            var imoCode = Console.ReadLine();
+            Console.Clear();
+
+            if (!Vessels.Exists(v => v.ImoNumber == imoCode))
+            {
+                Console.WriteLine("Vessel not found!!");
+            } else
+            {
+                Console.WriteLine($"Insert new IMO Number for vessel {imoCode}");
+                var newImoCode = Console.ReadLine();
+                Console.Clear();
+
+                var vesselFound = VesselByImoNumber(imoCode);
+                vesselFound.ImoNumber = newImoCode;
+                Console.WriteLine($"Vessel with IMO Number ({imoCode}) is changed!!\n");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadLine();
+            }
         }
 
     }
