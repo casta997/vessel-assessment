@@ -51,9 +51,15 @@ namespace Application.repos
                 imoCode = imoCode.Trim();
                
                 if (!CheckValueImoNumber(imoCode))
+                {
+                    Console.Clear();
                     Console.WriteLine("IMO Number can not be empty!");
+                }
                 else if (checkVesselExist(imoCode))
+                {
+                    Console.Clear();
                     Console.WriteLine("Vessel is already added!");
+                }
                 else
                 {
                     AddVessel(imoCode);
@@ -91,7 +97,12 @@ Information of the selected vessel:
 
         public void ProgrammUpdateVessel()
         {
-            Console.WriteLine("Insert IMO Number of Vessel to modify:");
+            Console.WriteLine("----------- List of Vessels -----------");
+            foreach (var item in Vessels)
+            {
+                Console.WriteLine($"IMO Number: {item.ImoNumber}");
+            }
+            Console.WriteLine("\n\nInsert IMO Number of Vessel to modify:");
             var imoCode = Console.ReadLine();
             Console.Clear();
 
@@ -104,12 +115,25 @@ Information of the selected vessel:
                 var newImoCode = Console.ReadLine();
                 Console.Clear();
 
-                var vesselFound = VesselByImoNumber(imoCode);
-                vesselFound.ImoNumber = newImoCode;
-                Console.WriteLine($"Vessel with IMO Number ({imoCode}) is changed!!\n");
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadLine();
-                Console.Clear();
+                if (!CheckValueImoNumber(newImoCode))
+                {
+                    Console.Clear();
+                    Console.WriteLine("IMO Number can not be empty!");
+                }
+                else if (checkVesselExist(newImoCode))
+                {
+                    Console.Clear();
+                    Console.WriteLine("Vessel is already added!");
+                }
+                else
+                {
+                    var vesselFound = VesselByImoNumber(imoCode);
+                    vesselFound.ImoNumber = newImoCode;
+                    Console.WriteLine($"Vessel with IMO Number ({imoCode}) is changed!!\n");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
             }
         }
 
