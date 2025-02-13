@@ -12,9 +12,39 @@ namespace Application.Services
     //Creation of the service VessselService that use the interface IVesselService
     public class VesselService : IVesselService
     {
+        public static int newId = 0;
+        
+        //Method used to create bew vessels
         public void CreateVessel()
         {
-
+            
+            ReadVessel();
+            Console.Write("\nEnter the IMO number for the new vessel: ");
+            string newVessel = Console.ReadLine();
+            foreach (Vessel vessel in VesselRepo.vessels)
+            {
+                for (newId = 0; newId < vessel.Id; newId++)
+                {
+                    newId++;
+                }
+            }
+            foreach (Vessel vessel in VesselRepo.vessels)
+            {
+                if (vessel.ImoNumber != newVessel)
+                {
+                    
+                    Vessel newVesselInList = new Vessel(newId, newVessel);
+                    VesselRepo.vessels.Add(newVesselInList);
+                    Console.WriteLine("\nVessel created with success! Press any key to continue...");
+                    Console.ReadLine();
+                    break;
+                }
+                else if (vessel.ImoNumber == newVessel)
+                {
+                    Console.WriteLine("\nA vessel with this IMO number already exist! Press any key to continue...");
+                    Console.ReadLine();
+                }
+            }
         }
 
         //Method used to create and insert 3 vessels into the list "vessels"
@@ -100,7 +130,7 @@ namespace Application.Services
                 switch (choiceSelected)
                 {
                     case "C":
-                        Console.WriteLine("crea");
+                        CreateVessel();
                         break;
                     case "R":
                         ReadVessel();
