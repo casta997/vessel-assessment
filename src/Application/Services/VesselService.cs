@@ -39,16 +39,34 @@ namespace Application.Services
                 Console.WriteLine($"{vessel}");
             }
         }
+
+        //Method used to change the IMO number of a specific vessel
         public void UpdateVessel()
         {
+            ReadVessel();
+            Console.Write("\nEnter the IMO number of the vessel to update: ");
+            string vesselToUpdate = Console.ReadLine();
 
+            foreach (Vessel vessel in VesselRepo.vessels)
+            {
+                if (vessel.ImoNumber == vesselToUpdate)
+                {
+                    Console.Write("\nEnter the new IMO number: ");
+                    string newImoNumber = Console.ReadLine();
+
+                    vessel.ImoNumber = newImoNumber;
+                    Console.WriteLine($"\nVessel with IMO number {vesselToUpdate} changed into {newImoNumber} with success! Press any key to continue...");
+                    Console.ReadLine();
+                    break;
+                }
+            }
         }
 
         //Method used to delete a vessel by his IMO number
         public void DeleteVessel()
         {
             ReadVessel();
-            Console.WriteLine("\nEnter the IMO number of the vessel to delete: ");
+            Console.Write("\nEnter the IMO number of the vessel to delete: ");
             string vesselToDelete = Console.ReadLine();
 
             foreach (Vessel vessel in VesselRepo.vessels)
@@ -56,7 +74,7 @@ namespace Application.Services
                 if (vessel.ImoNumber == vesselToDelete)
                 {
                     VesselRepo.vessels.Remove(vessel);
-                    Console.WriteLine($"Vessel with IMO number {vesselToDelete} deleted with success! Press any key to continue...");
+                    Console.WriteLine($"\nVessel with IMO number {vesselToDelete} deleted with success! Press any key to continue...");
                     Console.ReadLine();
                     break;
                 }
@@ -90,7 +108,7 @@ namespace Application.Services
                         Console.ReadLine();
                         break;
                     case "U":
-                        Console.WriteLine("modifica");
+                        UpdateVessel();
                         break;
                     case "D":
                         DeleteVessel();
