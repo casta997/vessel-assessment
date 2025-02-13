@@ -17,7 +17,7 @@ namespace Application.Services
     */
     public class VesselService : IVesselService
     {
-        public static string choiceSelected = string.Empty;
+        public static string choiceSelected = string.Empty; 
 
         //Method to create and add new vessel to the list vessels
         public void CreateVessel()
@@ -35,10 +35,20 @@ namespace Application.Services
                     Id = newId,
                     ImoNumber = newVesselImoNumber
                 };
-                vessels.Add(newVesselInList);
-                Console.WriteLine($"\nThe vessel with IMO number {newVesselImoNumber} was saved successfully! Press any key to continue...\n" +
-                                       "-----------------------------");
-                Console.ReadLine();
+
+                if (vessels.Any(v => v.ImoNumber == newVesselImoNumber))
+                {
+                    Console.WriteLine($"\nA vessel wiht this IMO number {newVesselImoNumber} was already registered.\n" +
+                                           "-----------------------------");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    vessels.Add(newVesselInList);
+                    Console.WriteLine($"\nThe vessel with IMO number {newVesselImoNumber} was saved successfully! Press any key to continue...\n" +
+                                           "-----------------------------");
+                    Console.ReadLine();
+                }
             }
             else
             {
