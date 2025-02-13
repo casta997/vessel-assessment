@@ -43,9 +43,24 @@ namespace Application.Services
         {
 
         }
+
+        //Method used to delete a vessel by his IMO number
         public void DeleteVessel()
         {
+            ReadVessel();
+            Console.WriteLine("\nEnter the IMO number of the vessel to delete: ");
+            string vesselToDelete = Console.ReadLine();
 
+            foreach (Vessel vessel in VesselRepo.vessels)
+            {
+                if (vessel.ImoNumber == vesselToDelete)
+                {
+                    VesselRepo.vessels.Remove(vessel);
+                    Console.WriteLine($"Vessel with IMO number {vesselToDelete} deleted with success! Press any key to continue...");
+                    Console.ReadLine();
+                    break;
+                }
+            }
         }
 
         //Method used to show the menu and execute the action selected by the user
@@ -78,7 +93,7 @@ namespace Application.Services
                         Console.WriteLine("modifica");
                         break;
                     case "D":
-                        Console.WriteLine("elimina");
+                        DeleteVessel();
                         break;
                     case "E":
                         return false;
