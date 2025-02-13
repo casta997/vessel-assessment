@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Application.repos;
+﻿using Application.repos;
 
 var appManage = new ManageVessel();
 

@@ -1,11 +1,5 @@
 ﻿using Application.entities;
 using Application.services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.repos
 {
@@ -51,12 +45,6 @@ namespace Application.repos
 
         public void ProgrammAddingVessel()
         {
-            /*
-             * var emptyImoNumber = true;
-            while (emptyImoNumber)
-            {
-            }
-            */
             Console.Write("Insert IMO code:");
             var imoCode = Console.ReadLine();
             imoCode = imoCode.Trim();
@@ -79,7 +67,6 @@ namespace Application.repos
                 Console.Clear();
                 Console.WriteLine($"Vessel {imoCode} is created successfully! \n");
                 MsgAfterConcludeOperations();
-                //emptyImoNumber = false;
             }
 
         }
@@ -93,17 +80,6 @@ namespace Application.repos
             }
 
             MsgAfterConcludeOperations();
-            /*
-            Console.Write("Insert id of the interested vessel: ");
-            var idVesselInput = int.Parse(Console.ReadLine());
-            var vessel = Vessel(idVesselInput);
-            Console.WriteLine(
-                $@"
-Information of the selected vessel:
-    {vessel}
-"
-                );
-            */
         }
 
         public void ProgrammUpdateVessel()
