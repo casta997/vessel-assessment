@@ -10,6 +10,7 @@ namespace Application.Interfaces
     public interface IVesselService
     {
         public void CreateVessel();
+        public void CreateInitialVessels();
         public void ReadVessel();
         public void UpdateVessel();
         public void DeleteVessel();

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Repo
+namespace Application.Repos
 {
     //Creation of the vessels list.
     public class VesselRepo
     {
-        public static List<VesselRepo> vessels = new();
+        public static List<Vessel> vessels = new();
     }
 }

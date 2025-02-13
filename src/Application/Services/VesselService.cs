@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using Application.Models;
+using Application.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,23 @@ namespace Application.Services
         {
 
         }
+
+        //Method used to create and insert 3 vessels into the list "vessels"
+        public void CreateInitialVessels()
+        {
+            Vessel vesselRoma = new Vessel(1, "roma1");
+            Vessel vesselRio = new Vessel(2, "rio1");
+            Vessel vesselLivorno = new Vessel(3, "livorno1");
+            VesselRepo.vessels.Add(vesselRoma);
+            VesselRepo.vessels.Add(vesselRio);
+            VesselRepo.vessels.Add(vesselLivorno);
+        }
+
+        //Method used to stamp the list "vessels"
         public void ReadVessel()
         {
-
+            Console.WriteLine("\nList of vessels:\n");
+            Console.WriteLine(VesselRepo.vessels.Count());
         }
         public void UpdateVessel()
         {
@@ -30,6 +46,7 @@ namespace Application.Services
         //Method used to show the menu and execute the action selected by the user
         public bool SelectActionOnVessel()
         {
+            CreateInitialVessels();
             do
             {
                 Console.WriteLine("WELCOME TO THE VESSEL CONSOLE APP\n");
@@ -50,6 +67,7 @@ namespace Application.Services
                     case "2":
                     case "R":
                         Console.WriteLine("leggi");
+                        ReadVessel();
                         break;
                     case "3":
                     case "U":
