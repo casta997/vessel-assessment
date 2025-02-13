@@ -22,7 +22,7 @@ namespace Application.Services
         //Method to create and add new vessel to the list vessels
         public void CreateVessel()
         {
-            Console.Write("\nEnter the imo number for the new vessel: ");
+            Console.Write("\nEnter the IMO number for the new vessel: ");
             string newVesselImoNumber = Console.ReadLine();
 
             if (!string.IsNullOrEmpty(newVesselImoNumber))
@@ -36,12 +36,15 @@ namespace Application.Services
                     ImoNumber = newVesselImoNumber
                 };
                 vessels.Add(newVesselInList);
-                Console.WriteLine($"\nThe vessel with imo number {newVesselImoNumber} was saved successfully!\n" +
+                Console.WriteLine($"\nThe vessel with IMO number {newVesselImoNumber} was saved successfully! Press any key to continue...\n" +
                                        "-----------------------------");
+                Console.ReadLine();
             }
             else
             {
-                Console.WriteLine("\nInsert a valid imo number, at least one character.");
+                Console.WriteLine("\nInsert a valid IMO number, at least one character. Press any key to continue...\n" +
+                                       "-----------------------------");
+                Console.ReadLine();
             }
         }
 
@@ -80,43 +83,47 @@ namespace Application.Services
         //Method to modify a vessel imo number
         public void UpdateVessel() 
         {
-            Console.Write("\nEnter the imo number of the vessel that you want to modify: ");
+            Console.Write("\nEnter the IMO number of the vessel that you want to modify: ");
             string vesselToModify = Console.ReadLine();
 
             Vessel vessel = vessels.FirstOrDefault(v => v.ImoNumber == vesselToModify);
             if (vessel != null)
             {
-                Console.Write("Enter the new imo number: ");
+                Console.Write("Enter the new IMO number: ");
                 string imoNumberModified = Console.ReadLine();
 
                 vessel.ImoNumber = imoNumberModified;
-                Console.WriteLine($"\nThe vessel with imo number {vesselToModify} was modified successfully into {imoNumberModified}!\n" +
+                Console.WriteLine($"\nThe vessel with IMO number {vesselToModify} was modified successfully into {imoNumberModified}! Press any key to continue...\n" +
                                    "-----------------------------");
+                Console.ReadLine();
             }
             else
             {
-                Console.WriteLine("\nError!! This vessel was not found.\n" +
+                Console.WriteLine("\nError!! This vessel was not found. Press any key to continue...\n" +
                                    "-----------------------------");
+                Console.ReadLine();
             }
         }
 
         //Method to delete vessels
         public void DeleteVessel()
         {
-            Console.Write("\nEnter the imo number of the vessel that you want to delete: ");
+            Console.Write("\nEnter the IMO number of the vessel that you want to delete: ");
             string vesselToDelete = Console.ReadLine();
 
             Vessel vessel = vessels.FirstOrDefault(v => v.ImoNumber == vesselToDelete);
             if (vessel != null)
             {
                 vessels.Remove(vessel);
-                Console.WriteLine($"\nThe vessel with imo number {vesselToDelete}  was deleted successfully!\n" +
+                Console.WriteLine($"\nThe vessel with IMO number {vesselToDelete}  was deleted successfully! Press any key to continue...\n" +
                                    "-----------------------------");
+                Console.ReadLine();
             }
             else
             {
-                Console.WriteLine("\nError!! This vessel was not found.\n" +
+                Console.WriteLine("\nError!! This vessel was not found. Press any key to continue...\n" +
                                    "-----------------------------");
+                Console.ReadLine();
             }
         }
 
@@ -138,12 +145,13 @@ namespace Application.Services
                 ReadVessel();
                 Console.Write("\nSelect action: ");
                 choiceSelected = Console.ReadLine().ToUpper();
-                //Console.Clear(); Un comment this to clear the menu after every choice
-
+                Console.Clear(); //Un comment this to clear the menu after every choice
+                
                 switch (choiceSelected)
                 {
                     case "1":
                     case "C":
+                        ReadVessel();
                         CreateVessel();
                         RepeatActionOnVessel();
                         break;
@@ -157,11 +165,12 @@ namespace Application.Services
                     case "U":
                         if (vessels.Count != 0)
                         {
+                            ReadVessel();
                             UpdateVessel();
                         }
                         else
                         {
-                            Console.WriteLine("\nThe vessel list is empty, you can't modify elements. Press any key to continue...\n" +
+                            Console.WriteLine("\nThe vessel list is empty, you can't modify elements." +
                                    "-----------------------------");
                             Console.ReadLine();
                         }
@@ -171,11 +180,12 @@ namespace Application.Services
                     case "D":
                         if (vessels.Count != 0)
                         {
+                            ReadVessel();
                             DeleteVessel();
                         }
                         else
                         {
-                            Console.WriteLine("\nThe vessel list is empty, you can't delete elements. Press any key to continue...\n" +
+                            Console.WriteLine("\nThe vessel list is empty, you can't delete elements." +
                                    "-----------------------------");
                             Console.ReadLine();
                         }
@@ -201,6 +211,8 @@ namespace Application.Services
                 //Console.Clear();
                 if (vessels.Count != 0)
                 {
+                    Console.Clear();
+                    ReadVessel();
                     Console.WriteLine("\nDo you want to repeat the action?\n\n" +
                                     "1) Yes\n" +
                                     "2) No\n");
@@ -231,7 +243,8 @@ namespace Application.Services
                     }
                     else
                     {
-                        Console.WriteLine("\nError!! Select a valid option, 1 or 2.\n");
+                        Console.WriteLine("\nError!! Select a valid option, 1 or 2. Press any key to continue...\n");
+                        Console.ReadLine();
                     }
                 }
                 else
