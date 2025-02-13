@@ -31,8 +31,13 @@ namespace Application.Services
         //Method used to stamp the list "vessels"
         public void ReadVessel()
         {
-            Console.WriteLine("\nList of vessels:\n");
-            Console.WriteLine(VesselRepo.vessels.Count());
+            Console.WriteLine("\nList of vessels:\n" +
+                            "\nID\tIMO NUMBER\n");
+
+            foreach (Vessel vessel in VesselRepo.vessels)
+            {
+                Console.WriteLine($"{vessel}");
+            }
         }
         public void UpdateVessel()
         {
@@ -50,38 +55,36 @@ namespace Application.Services
             do
             {
                 Console.WriteLine("WELCOME TO THE VESSEL CONSOLE APP\n");
-                Console.WriteLine("1.C) Create a vessel\n" +
-                                    "2.R) Read list of vessels\n" +
-                                    "3.U) Update a vessel\n" +
-                                    "4.D) Delete a vessel\n" +
-                                    "5.E) Exit\n");
-                Console.Write("Selected action: ");
+                Console.WriteLine("C) Create a vessel\n" +
+                                    "R) Read list of vessels\n" +
+                                    "U) Update a vessel\n" +
+                                    "D) Delete a vessel\n" +
+                                    "E) Exit");
+                ReadVessel();
+                Console.Write("\nSelected action: ");
                 string choiceSelected = Console.ReadLine().ToUpper();
 
                 switch (choiceSelected)
                 {
-                    case "1":
                     case "C":
                         Console.WriteLine("crea");
                         break;
-                    case "2":
                     case "R":
-                        Console.WriteLine("leggi");
                         ReadVessel();
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadLine();
                         break;
-                    case "3":
                     case "U":
                         Console.WriteLine("modifica");
                         break;
-                    case "4":
                     case "D":
                         Console.WriteLine("elimina");
                         break;
-                    case "5":
                     case "E":
                         return false;
                     default: 
-                        Console.WriteLine("Select a valid option from the menu!");
+                        Console.WriteLine("\nSelect a valid option from the menu! Press any key to continue...");
+                        Console.ReadLine();
                         break;
                 }
             }

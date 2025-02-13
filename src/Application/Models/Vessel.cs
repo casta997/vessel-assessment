@@ -17,5 +17,10 @@ namespace Application.Models
             Id = id;
             ImoNumber = imoNumber;
         }
+
+        public override string ToString()
+        {
+            return $"{Id}\t{ImoNumber}";
+        }
     }
 }
