@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Repo
 {
-    //Creation of the vessels list
+    //Creation of the vessels list.
     public class VesselRepo
     {
         public static List<VesselRepo> vessels = new();
