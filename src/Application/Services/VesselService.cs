@@ -25,18 +25,24 @@ namespace Application.Services
             Console.Write("\nEnter the imo number for the new vessel: ");
             string newVesselImoNumber = Console.ReadLine();
 
-            Vessel lastVessel = vessels.LastOrDefault();
-            int newId = (lastVessel != null) ? lastVessel.Id + 1 : 1;
-
-            Vessel newVesselInList = new()
+            if (!string.IsNullOrEmpty(newVesselImoNumber))
             {
-                Id = newId,
-                ImoNumber = newVesselImoNumber
-            };
-            vessels.Add(newVesselInList);
-            Console.WriteLine($"\nThe vessel with imo number {newVesselImoNumber} was saved successfully!\n" +
-                                   "-----------------------------");
-            
+                Vessel lastVessel = vessels.LastOrDefault();
+                int newId = (lastVessel != null) ? lastVessel.Id + 1 : 1;
+
+                Vessel newVesselInList = new()
+                {
+                    Id = newId,
+                    ImoNumber = newVesselImoNumber
+                };
+                vessels.Add(newVesselInList);
+                Console.WriteLine($"\nThe vessel with imo number {newVesselImoNumber} was saved successfully!\n" +
+                                       "-----------------------------");
+            }
+            else
+            {
+                Console.WriteLine("\nInsert a valid imo number, at least one character.");
+            }
         }
 
         //Method that create 3 vessels and add them into the list
@@ -121,30 +127,34 @@ namespace Application.Services
             CreateExampleOfVessel();
             do
             {
+                Console.Clear();
                 Console.WriteLine("WELCOME TO VESSEL COMPANY\n\n"+
                                    "Select an action:\n\n"+
-                                   "1) Create a new vessel\n"+
-                                   "2) Read list of vessels avaiable\n"+
-                                   "3) Modify a vessel\n"+
-                                   "4) Delete a vessel\n"+
-                                   "5) Exit\n");
+                                   "1.C) Create a new vessel\n"+
+                                   "2.R) Read list of vessels avaiable\n"+
+                                   "3.U) Modify a vessel\n"+
+                                   "4.D) Delete a vessel\n"+
+                                   "5.E) Exit\n");
                 ReadVessel();
                 Console.Write("\nSelect action: ");
-                choiceSelected = Console.ReadLine();
+                choiceSelected = Console.ReadLine().ToUpper();
                 //Console.Clear(); Un comment this to clear the menu after every choice
 
                 switch (choiceSelected)
                 {
                     case "1":
+                    case "C":
                         CreateVessel();
                         RepeatActionOnVessel();
                         break;
                     case "2":
+                    case "R":
                         ReadVessel();
                         Console.WriteLine("\nPress any key to continue...");
                         Console.ReadLine();
                         break;
                     case "3":
+                    case "U":
                         if (vessels.Count != 0)
                         {
                             UpdateVessel();
@@ -158,6 +168,7 @@ namespace Application.Services
                         RepeatActionOnVessel();
                         break;
                     case "4":
+                    case "D":
                         if (vessels.Count != 0)
                         {
                             DeleteVessel();
@@ -171,13 +182,13 @@ namespace Application.Services
                         RepeatActionOnVessel();
                         break;
                     case "5":
+                    case "E":
                         return false;
                     default:
-                        Console.WriteLine("\nError!! Choose an action from the menu, 1 to 5. Press any key to continue...\n");
+                        Console.WriteLine("\nError!! Choose an action from the menu. Press any key to continue...\n");
                         Console.ReadLine();
                         break;
                 }
-                Console.Clear();
             }
             while (true);
         }
@@ -187,6 +198,7 @@ namespace Application.Services
         {  
             do
             {
+                //Console.Clear();
                 if (vessels.Count != 0)
                 {
                     Console.WriteLine("\nDo you want to repeat the action?\n\n" +
