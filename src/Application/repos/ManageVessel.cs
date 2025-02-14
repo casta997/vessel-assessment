@@ -15,9 +15,12 @@ namespace Application.repos
 
         public void AddVessel(string imoVessel) 
         {
-            var countVessels = Vessels.Count + 1;
-            var vessel = new Vessel(countVessels, imoVessel);
-            Vessels.Add(vessel);
+            var maxId = 0;
+            foreach (var item in Vessels)
+            {
+                maxId = (item.Id > maxId) ? item.Id : maxId;
+            }
+            Vessels.Add(new Vessel(++maxId, imoVessel));
             Console.Clear();
         }
 
