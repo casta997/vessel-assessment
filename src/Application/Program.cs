@@ -23,7 +23,7 @@ C.- Add vessel
 R.- Show vessels
 U.- Edit vessel
 D.- Delete vessel
-e.- Exit
+e.- exit
 ");
 
     var characterInput = Console.ReadKey().KeyChar;
