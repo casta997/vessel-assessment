@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using Application.Models;
+using Application.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,12 @@ namespace Application.Services
 
         public void CreateSomeVessel()
         {
-
+            Vessel genovaVessel = new Vessel(1, "genova1");
+            Vessel rioVessel = new Vessel(2, "rio1");
+            Vessel livornoVessel = new Vessel(3, "livorno1");
+            VesselRepo.vessels.Add(genovaVessel);
+            VesselRepo.vessels.Add(rioVessel);
+            VesselRepo.vessels.Add(livornoVessel);
         }
 
         public void ReadVessel()
