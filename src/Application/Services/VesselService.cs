@@ -34,12 +34,10 @@ namespace Application.Services
             bool imoExists = false;
             foreach (Vessel vessel in VesselRepo.vessels)
             {
+                if (vessel.ImoNumber == newVessel)
                 {
-                    if (vessel.ImoNumber == newVessel)
-                    {
-                        imoExists = true;
-                        break;
-                    }
+                    imoExists = true;
+                    break;
                 }
             }
 
@@ -138,21 +136,25 @@ namespace Application.Services
                 ReadVessel();
                 Console.Write("\nSelected action: ");
                 string choiceSelected = Console.ReadLine().ToUpper();
-
+                Console.Clear();
                 switch (choiceSelected)
                 {
                     case "C":
+                        Console.WriteLine($"Selected action: {choiceSelected}");
                         CreateVessel();
                         break;
                     case "R":
+                        Console.WriteLine($"Selected action: {choiceSelected}");
                         ReadVessel();
                         Console.WriteLine("\nPress any key to continue...");
                         Console.ReadLine();
                         break;
                     case "U":
+                        Console.WriteLine($"Selected action: {choiceSelected}");
                         UpdateVessel();
                         break;
                     case "D":
+                        Console.WriteLine($"Selected action: {choiceSelected}");
                         DeleteVessel();
                         break;
                     case "E":
