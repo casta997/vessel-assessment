@@ -20,38 +20,45 @@ namespace Application.Services
             ReadVessel();
             Console.Write("\nEnter the IMO number for the new vessel: ");
             string newVessel = Console.ReadLine();
-            
-            int maxId = 0;
-            foreach (Vessel vessel in VesselRepo.vessels)
+            if(newVessel.Length > 0)
             {
-                if (vessel.Id > maxId)
+                int maxId = 0;
+                foreach (Vessel vessel in VesselRepo.vessels)
                 {
-                    maxId = vessel.Id;
+                    if (vessel.Id > maxId)
+                    {
+                        maxId = vessel.Id;
+                    }
                 }
-            }
-            int newId = maxId + 1;
+                int newId = maxId + 1;
 
-            bool imoExists = false;
-            foreach (Vessel vessel in VesselRepo.vessels)
-            {
-                if (vessel.ImoNumber == newVessel)
+                bool imoExists = false;
+                foreach (Vessel vessel in VesselRepo.vessels)
                 {
-                    imoExists = true;
-                    break;
+                    if (vessel.ImoNumber == newVessel)
+                    {
+                        imoExists = true;
+                        break;
+                    }
                 }
-            }
 
-            if (!imoExists)
-            {
+                if (!imoExists)
+                {
 
-                Vessel newVesselInList = new Vessel(newId, newVessel);
-                VesselRepo.vessels.Add(newVesselInList);
-                Console.WriteLine("\nVessel created with success! Press any key to continue...");
-                Console.ReadLine();
+                    Vessel newVesselInList = new Vessel(newId, newVessel);
+                    VesselRepo.vessels.Add(newVesselInList);
+                    Console.WriteLine("\nVessel created with success! Press any key to continue...");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("\nA vessel with this IMO number already exist! Press any key to continue...");
+                    Console.ReadLine();
+                }
             }
             else
             {
-                Console.WriteLine("\nA vessel with this IMO number already exist! Press any key to continue...");
+                Console.WriteLine("\nThe IMO number must have at least one character. Press any key to continue...");
                 Console.ReadLine();
             }
         }
