@@ -12,7 +12,6 @@ namespace Application.Services
     //Creation of the service VessselService that use the interface IVesselService
     public class VesselService : IVesselService
     {
-        public static int newId = 0;
         
         //Method used to create bew vessels
         public void CreateVessel()
@@ -21,29 +20,41 @@ namespace Application.Services
             ReadVessel();
             Console.Write("\nEnter the IMO number for the new vessel: ");
             string newVessel = Console.ReadLine();
+            
+            int maxId = 0;
             foreach (Vessel vessel in VesselRepo.vessels)
             {
-                for (newId = 0; newId < vessel.Id; newId++)
+                if (vessel.Id > maxId)
                 {
-                    newId++;
+                    maxId = vessel.Id;
                 }
             }
+            int newId = maxId + 1;
+
+            bool imoExists = false;
             foreach (Vessel vessel in VesselRepo.vessels)
             {
-                if (vessel.ImoNumber != newVessel)
                 {
-                    
-                    Vessel newVesselInList = new Vessel(newId, newVessel);
-                    VesselRepo.vessels.Add(newVesselInList);
-                    Console.WriteLine("\nVessel created with success! Press any key to continue...");
-                    Console.ReadLine();
-                    break;
+                    if (vessel.ImoNumber == newVessel)
+                    {
+                        imoExists = true;
+                        break;
+                    }
                 }
-                else if (vessel.ImoNumber == newVessel)
-                {
-                    Console.WriteLine("\nA vessel with this IMO number already exist! Press any key to continue...");
-                    Console.ReadLine();
-                }
+            }
+
+            if (!imoExists)
+            {
+
+                Vessel newVesselInList = new Vessel(newId, newVessel);
+                VesselRepo.vessels.Add(newVesselInList);
+                Console.WriteLine("\nVessel created with success! Press any key to continue...");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("\nA vessel with this IMO number already exist! Press any key to continue...");
+                Console.ReadLine();
             }
         }
 
@@ -117,6 +128,7 @@ namespace Application.Services
             CreateInitialVessels();
             do
             {
+                Console.Clear();
                 Console.WriteLine("WELCOME TO THE VESSEL CONSOLE APP\n");
                 Console.WriteLine("C) Create a vessel\n" +
                                     "R) Read list of vessels\n" +
