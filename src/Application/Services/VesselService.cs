@@ -32,7 +32,7 @@ namespace Application.Services
         public void ReadVessel()
         {
             Console.WriteLine("\nList of the vessels: ");
-            Console.WriteLine("\nID\tIMO NUMBER");
+            Console.WriteLine("\nID\tIMO NUMBER\n");
 
             //Foreach object vessel inside of the list vessels the program write their values
             foreach (Vessel vessel in VesselRepo.vessels)
@@ -46,9 +46,42 @@ namespace Application.Services
 
         }
 
+        //Method that make the user delete a vessel
         public void DeleteVessel()
         {
+            Console.Write("\nEnter the IMO number of the vessel to delete: ");
+            string vesselToDelete = Console.ReadLine();
 
+            //Declaration of 2 local scope
+            bool vesselExist = false;
+            Vessel vesselFound = null;
+
+            //For every vessel in vessels check if one has the same IMO number wrote by the user
+            foreach (Vessel vessel in VesselRepo.vessels)
+            {
+                if (vessel.ImoNumber == vesselToDelete)
+                {
+                    vesselExist = true;
+
+                    //The object needs to be removed entirely and vessel is not accessible outside the foreach so now the vessel found lives inside the variable vesselToRemove 
+                    vesselFound = vessel;
+                    break;
+                }
+            }
+
+            //If there is a match the vessel is removed 
+            if (vesselExist == true)
+            {
+                VesselRepo.vessels.Remove(vesselFound);
+                Console.WriteLine($"\nVessel with IMO number {vesselToDelete} deleted with success! Press any key to continue...");
+                Console.ReadLine();
+            }
+            //If there is no match than nothing is removed 
+            else
+            {
+                Console.WriteLine($"\nVessel with IMO number {vesselToDelete} not found. Press any key to continue...");
+                Console.ReadLine();
+            }
         }
 
 
