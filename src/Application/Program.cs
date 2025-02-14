@@ -1,5 +1,4 @@
 ﻿using Application.entities;
-using Application.enumValues;
 using Application.repos;
 
 var appManage = new ManageVessel();

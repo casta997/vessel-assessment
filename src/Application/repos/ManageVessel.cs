@@ -1,5 +1,6 @@
 ﻿using Application.entities;
 using Application.services;
+using System.Reflection.Metadata;
 
 namespace Application.repos
 {
@@ -25,9 +26,16 @@ namespace Application.repos
             return Vessels.Find(v => v.ImoNumber == imoCode);
         }
 
+        public Vessel VesselById(int value) => Vessels.Find(v => v.Id == value);
+
         public bool checkVesselExist(string imoCode)
         {
             return Vessels.Exists(v => v.ImoNumber == imoCode);
+        }
+
+        public bool checkVesselExistById(int value)
+        {
+            return Vessels.Exists(v => v.Id == value);
         }
 
         public bool CheckValueWithoutChars(string value)
@@ -58,6 +66,7 @@ namespace Application.repos
             {
                 AddVessel(imoCode);
                 ProgrammGetVessels();
+                Console.WriteLine($"\nVessel with IMO Number {imoCode} is added correctly!!");
                 BreakConcludeOperation("");
             }
 
@@ -74,64 +83,47 @@ namespace Application.repos
 
         public void ProgrammUpdateVessel()
         {
-            Console.WriteLine("----------- List of Vessels -----------");
-            foreach (var item in Vessels)
-            {
-                Console.WriteLine($"IMO Number: {item.ImoNumber}");
-            }
-            Console.WriteLine("\n\nInsert IMO Number of Vessel to modify:");
-            var imoCode = Console.ReadLine();
+            ProgrammGetVessels();
+            Console.WriteLine("\n\nInsert Id of the Vessel to update:");
+            string inputIdVessel = Console.ReadLine();
             Console.Clear();
 
-            if (!Vessels.Exists(v => v.ImoNumber == imoCode))
+            if (int.TryParse(inputIdVessel, out int idVessel) && checkVesselExistById(idVessel))
             {
-                Console.WriteLine("Vessel not found!!");
-                BreakConcludeOperation("");
-            } else
-            {
-                Console.WriteLine($"Insert new IMO Number for vessel {imoCode}");
+                Console.WriteLine($"Insert new IMO Number for vessel with id: {idVessel}");
                 var newImoCode = Console.ReadLine();
                 Console.Clear();
 
-                if (CheckValueWithoutChars(newImoCode))
-                {
-                    Console.Clear();
-                    Console.WriteLine("IMO Number can not be empty!");
-                    BreakConcludeOperation("");
-                }
-                else if (checkVesselExist(newImoCode))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Vessel is already added!");
-                    BreakConcludeOperation("");
-                }
-                else
-                {
-                    var vesselFound = VesselByImoNumber(imoCode);
-                    vesselFound.ImoNumber = newImoCode;
-                    Console.WriteLine($"Vessel with IMO Number ({imoCode}) is changed!!\n");
-                    BreakConcludeOperation("");
-                }
+                var vesselFound = VesselById(idVessel);
+                vesselFound.ImoNumber = newImoCode;
+                ProgrammGetVessels();
+                Console.WriteLine($"\nIMO number of Vessel with id {idVessel} is updated correctly!!");
+                BreakConcludeOperation("");
+            } else
+            {
+                BreakConcludeOperation("Vessel not found!!");
             }
         }
 
         public void ProgrammDeleteVessel()
         {
-            Console.WriteLine("Insert IMO Number of Vessel to delete:");
-            var imoCode = Console.ReadLine();
+            ProgrammGetVessels();
+            Console.WriteLine("\n\nInsert Id of the Vessel to delete:");
+            string inputIdVessel = Console.ReadLine();
             Console.Clear();
 
-            if (!checkVesselExist(imoCode))
+            if (int.TryParse(inputIdVessel, out int idVessel) && checkVesselExistById(idVessel))
             {
-                Console.WriteLine("Vessel not found!!");
+                var vesselFound = VesselById(idVessel);
+                Vessels.Remove(vesselFound);
+
+                ProgrammGetVessels();
+                Console.WriteLine($"\nVessel with id ({idVessel}) is deleted!!\n");
                 BreakConcludeOperation("");
             }
             else
             {
-                var vesselFound = VesselByImoNumber(imoCode);
-                Vessels.Remove(vesselFound);
-                Console.WriteLine($"Vessel with IMO Number ({imoCode}) is deleted!!\n");
-                BreakConcludeOperation("");
+                BreakConcludeOperation("Vessel not found!!");
             }
         }
     }
