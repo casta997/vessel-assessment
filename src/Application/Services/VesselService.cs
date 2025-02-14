@@ -17,6 +17,7 @@ namespace Application.Services
 
         }
 
+        //Method that create some vessels to add in the list
         public void CreateSomeVessel()
         {
             Vessel genovaVessel = new Vessel(1, "genova1");
@@ -27,9 +28,17 @@ namespace Application.Services
             VesselRepo.vessels.Add(livornoVessel);
         }
 
+        //Method that display the "vessels" list
         public void ReadVessel()
         {
+            Console.WriteLine("\nList of the vessels: ");
+            Console.WriteLine("\nID\tIMO NUMBER");
 
+            //Foreach object vessel inside of the list vessels the program write their values
+            foreach (Vessel vessel in VesselRepo.vessels)
+            {
+                Console.WriteLine(vessel);
+            }
         }
 
         public void UpdateVessel()
