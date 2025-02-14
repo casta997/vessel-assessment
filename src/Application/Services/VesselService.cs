@@ -14,7 +14,7 @@ namespace Application.Services
     {
         public void CreateVessel()
         {
-
+            ReadVessel();
         }
 
         //Method that create some vessels to add in the list
@@ -41,14 +41,65 @@ namespace Application.Services
             }
         }
 
+        //Method that let the user modify the IMO number of a vessel
         public void UpdateVessel()
         {
+            ReadVessel();
 
+            Console.Write("\nEnter the IMO number of the vessel to update: ");
+            string vesselToUpdate = Console.ReadLine();
+
+            //Declaration of 2 local scope
+            bool vesselExist = false;
+            Vessel vesselFound = null;
+
+            //For every vessel in vessels see if one has the same IMO number wrote by the user
+            foreach (Vessel vessel in VesselRepo.vessels)
+            {
+                if (vessel.ImoNumber == vesselToUpdate)
+                {
+                    vesselExist = true;
+
+
+                    //The object vessel is not accessible outside so it's being memorized in the variable vesselFound
+                    vesselFound = vessel;
+                    break;
+                }
+            }
+
+            //If there is a match the method ask for the new IMO number and save it 
+            if (vesselExist == true)
+            {
+                Console.Write("\nEnter the new IMO number: ");
+                string newImoNumber = Console.ReadLine();
+
+                //If the new IMO number has at least one character than the value is saved 
+                if (newImoNumber.Length > 0)
+                {
+                    vesselFound.ImoNumber = newImoNumber;
+                    Console.WriteLine($"\nVessel with IMO number {vesselToUpdate} updated with success into {newImoNumber}! Press any key to continue...");
+                    Console.ReadLine();
+                }
+                //If the new IMO number length is 0 this message shows up
+                else
+                {
+                    Console.WriteLine("\nThe IMO number must have at least one character. Press any key to continue...");
+                    Console.ReadLine();
+                }
+            }
+            //If there is no match the method show this message
+            else
+            {
+                Console.WriteLine($"\nVessel not found with IMO number {vesselToUpdate} not found. Press any key to continue...");
+                Console.ReadLine();
+            }
         }
 
         //Method that make the user delete a vessel
         public void DeleteVessel()
         {
+            ReadVessel();
+
             Console.Write("\nEnter the IMO number of the vessel to delete: ");
             string vesselToDelete = Console.ReadLine();
 
@@ -63,7 +114,7 @@ namespace Application.Services
                 {
                     vesselExist = true;
 
-                    //The object needs to be removed entirely and vessel is not accessible outside the foreach so now the vessel found lives inside the variable vesselToRemove 
+                    //The object needs to be removed entirely and vessel is not accessible outside the foreach so now the vessel found lives inside the variable vesselFound
                     vesselFound = vessel;
                     break;
                 }
