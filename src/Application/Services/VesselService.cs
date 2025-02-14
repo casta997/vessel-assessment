@@ -12,9 +12,58 @@ namespace Application.Services
     //Vessel service 
     public class VesselService : IVesselService
     {
+        //Method that create a new vessel with the IMO number given by the user 
         public void CreateVessel()
         {
             ReadVessel();
+
+            Console.Write("\nEnter the IMO number for the new vessel: ");
+            string newVessel = Console.ReadLine();
+
+            //Declaration of 2 local scope
+            bool vesselExist = false;
+            int nextId = 0;
+
+            //Check if there is already a vessel with the same IMO number insert by the user 
+            foreach (Vessel vessel in VesselRepo.vessels)
+            {
+                if (vessel.ImoNumber == newVessel)
+                {
+                    vesselExist = true;
+                    break;
+                }
+                else
+                {
+                    //Create the id for the new vessel. Foreach vessel inside vessels check if the newId is smaller than the vessel id and if it is newId will have the value of that id
+                    if (vessel.Id > nextId)
+                    {
+                        nextId = vessel.Id;
+                    }
+                    nextId++;
+                }
+            }
+
+            //If the new IMO number has at least one character and is not already in the list the method create the new vessel 
+            if (vesselExist == false && newVessel.Length > 0)
+            {
+                Vessel newVesselInList = new Vessel(nextId, newVessel);
+                VesselRepo.vessels.Add(newVesselInList);
+
+                Console.WriteLine($"\nVessel with IMO number {newVessel} created with success! Press any key to continue...");
+                Console.ReadLine();
+            }
+            //If the IMO number alredy exist this message will show up
+            else if (vesselExist == true)
+            {
+                Console.WriteLine("\nA vessel with this IMO number was already registered. Press any key to continue...");
+                Console.ReadLine();
+            }
+            //If the IMO number has 0 characters this message will show up
+            else if (newVessel.Length == 0)
+            {
+                Console.WriteLine("\nThe IMO number must have at least a character. Press any key to continue...");
+                Console.ReadLine();
+            }
         }
 
         //Method that create some vessels to add in the list
