@@ -5,13 +5,6 @@ var appManage = new ManageVessel();
 
 var isProgramOn = true;
 
-void messageEndFunction(string message)
-{
-    Console.WriteLine(message);
-    Console.ReadKey();
-    Console.Clear();
-}
-
 appManage.Vessels.Add(new Vessel(100, "9647227"));
 appManage.Vessels.Add(new Vessel(101, "9647228"));
 appManage.Vessels.Add(new Vessel(102, "9647229"));
